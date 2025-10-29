@@ -52,7 +52,6 @@ st.title("🍀 SSAC_TALK")
 # dotenv 로 key 불러오기
 load_dotenv()
 
-
 # Redis 서버의 URL을 지정합니다.
 # docker로 redis 서버를 띄운 것.
 # redis라는 NoSQL기반의 데이터베이스를 내 로컬이 아닌 DOCKER가 제공하는 redis 이미지를 받아서 
@@ -88,7 +87,7 @@ def get_reids_message_history(session_id: str) -> RedisChatMessageHistory:
 #        st.session_state["messages"] = []
 #        st.rerun()
 ########################################################################################################################
-# session id user 별로 배정 
+# session id user 별 자동 생성
 # 세션 상태 초기화
 if "id" not in st.session_state:
     st.session_state.id = str(uuid.uuid4())

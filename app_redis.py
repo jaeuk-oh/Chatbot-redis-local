@@ -94,8 +94,10 @@ def get_redis_message_history(session_id: str) -> RedisChatMessageHistory:
 # ============================================
 # 세션 유효성 검사 
 # ============================================
+# if not a or b --> 해버리면 not이 or 보다 우선되기 때문에 (not a) or b 가 되어버린다. 그래서 a가 false거나 b가 false일 때가 아니라 
+# a가 false거나 b가 참일 때가 되어버린다.
 def session_valid() -> bool:
-    if not st.session_state["session_initialized"] or st.session_state["session_id"]:
+    if not st.session_state["session_initialized"] or not st.session_state["session_id"]:
         return False
     return True
 
@@ -110,10 +112,11 @@ with st.sidebar:
         # UUID4를 사용하여 고유한 세션 ID 생성
         new_session_id = str(uuid.uuid4())
         st.session_state["session_id"] = new_session_id
-        st.session_state["session_initializeed"] = True
+        st.session_state["session_initialized"] = True
         st.success(f"새 세션이 생성되었습니다!\\nID: {new_session_id}")
         # 페이지를 다시 로드하여 새로운 세션 ID를 반영
-        st.rerun()
+        #st.rerun()
+    st.write(f"반갑습니다. {st.session_state.session_id}님")
 
     st.divider()
 

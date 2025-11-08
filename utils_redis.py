@@ -24,6 +24,7 @@ Modifications:
 
 from langchain_core.callbacks.base import BaseCallbackHandler
 import streamlit as st
+import uuid
 
 class StreamHandler(BaseCallbackHandler):
     def __init__(self,container, initial_text="") -> None:

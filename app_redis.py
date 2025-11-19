@@ -79,6 +79,15 @@ if "session_id" not in st.session_state:
 # ============================================
 # Redis 메시지 히스토리 함수
 # ============================================
+
+# prefix와 session id를 변수로 받아서 redis key값이 된다. -> key를 가지고 저장을 한다.
+#class RedisChatMessageHistory:
+#    def __init__(self, session_id, url):
+#        self.session_id = session_id
+#        self.url = url
+#        self.key_prefix = "message_store"  # prefix 기본값
+#        self.redis_key = f"{self.key_prefix}:{self.session_id}"
+        
 def get_redis_message_history(session_id: str) -> RedisChatMessageHistory:
     """Redis를 사용하여 세션 ID 기반의 채팅 기록을 반환합니다.
 
@@ -89,6 +98,7 @@ def get_redis_message_history(session_id: str) -> RedisChatMessageHistory:
         RedisChatMessageHistory: Redis에 저장된 채팅 기록 객체
     """
     # 세션 ID를 기반으로 RedisChatMessageHistory 객체를 반환합니다.
+    # redis 내부적으로 message_store:"id값" 이라는 key name으로 대화를 저장함.
     return RedisChatMessageHistory(session_id, url=REDIS_URL)
 
 # ============================================
@@ -114,10 +124,8 @@ with st.sidebar:
         st.session_state["session_id"] = new_session_id
         st.session_state["session_initialized"] = True
         st.success(f"새 세션이 생성되었습니다!\\nID: {new_session_id}")
-        # 페이지를 다시 로드하여 새로운 세션 ID를 반영
-        #st.rerun()
+    
     st.write(f"반갑습니다. {st.session_state.session_id}님")
-
     st.divider()
 
     # 대화기록 초기화 버튼
